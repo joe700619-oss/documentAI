@@ -63,6 +63,27 @@ def find_table_by_header(document, header_text):
 # -----------------------------------------------------
 # AI 回傳的 JSON (已包含 'agend' 列表)
 # -----------------------------------------------------
+
+#{{companyName}}, {{applyReason}},{{reservationNumber}},{{governmentfees}},{{companyId}},{{chairperson}}
+#{{zipcode}},{{address}},{{change_type}},{{new_directors_table}},{{removal_directors_table}},{{directors_table}}
+
+AI_JSON = {
+
+    "registration_data": {
+        "companyName": "原人股份有限公司",
+        "registrationNumber": "60299784",
+        "zipcode": "403", "address": "臺中市西區臺灣大道二段2號11樓之6",
+        "chairperson": "Peter", "change_type": "董事長替換",
+        "new_directors": [], "removal_directors": ["徐峻祥"], 
+        "directors_table":[
+            {"name": "Peter", "position": "director", "id": "A123456789", "address":"台中市西區五權路1-67號11樓之5", "shares":"500,000"},
+            {"name": "Joe", "position": "chairperson", "id": "B123456789", "address":"台中市西區五權路1-67號11樓之5", "shares":"500,000"}
+        ]
+    },
+
+
+}
+
 data = {
     "files": [
         {"file_name": "原人股份有限公司_20251119_董監改選及增資.docx", "file_type": "董事會議事錄"},
@@ -143,7 +164,7 @@ def add_agendas_to_table(doc, header_tag, json_agendas):
         # 填充內容到 3 個 Row 區塊
         
         # Row 1 (索引 0): 案由, 編號
-        _replace_in_paragraph(target_rows[0].cells[0].paragraphs[0], {"{{item}}": replacements["{{AGENDA_NUMBER}}"]})
+        _replace_in_paragraph(target_rows[0].cells[0].paragraphs[0], {"{{item}}": replacements["{{item}}"]})
         _replace_in_paragraph(target_rows[0].cells[2].paragraphs[0], {"{{AGENDA_TITLE}}": replacements["{{AGENDA_TITLE}}"]})
         
         # Row 2 (索引 1): 說明

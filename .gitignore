@@ -8,3 +8,9 @@ venv/
 # 忽略 Python 編譯產生的檔案
 __pycache__/
 *.pyc
+
+# 忽略輸出資料夾
+output/
+
+# 忽略 Word 暫存檔
+~$*.docx
