@@ -72,58 +72,116 @@ def find_table_by_header(document, header_text):
 #{{companyName}}, {{applyReason}},{{reservationNumber}},{{governmentfees}},{{companyId}},{{chairperson}}
 #{{zipcode}},{{address}},{{change_type}},{{new_directors_table}},{{removal_directors_table}},{{directors_table}}
 
-AI_JSON = {
 
-    "registration_data": {
-        "companyName": "原人股份有限公司",
-        "registrationNumber": "60299784",
-        "zipcode": "403", "address": "臺中市西區臺灣大道二段2號11樓之6",
-        "chairperson": "Peter", "change_type": "董事長替換",
-        "new_directors": [], "removal_directors": ["徐峻祥"], 
-        "directors_table":[
-            {"name": "Peter", "position": "director", "id": "A123456789", "address":"台中市西區五權路1-67號11樓之5", "shares":"500,000"},
-            {"name": "Joe", "position": "chairperson", "id": "B123456789", "address":"台中市西區五權路1-67號11樓之5", "shares":"500,000"}
-        ]
-    },
-
-
-}
 
 data = {
-    "files": [
-        {"file_name": "原人股份有限公司_20251119_董監改選及增資.docx", "file_type": "董事會議事錄"},
-        {"file_name": "原人股份有限公司_20251119_董監改選及增資.docx", "file_type": "委託書"},
-        {"file_name": "原人股份有限公司_20251119_董監改選及增資.docx", "file_type": "股東臨時會會議事錄"}
+
+  "basic_info": {
+    "companyName": "茉莉家事服務股份有限公司",
+    "companyName_eng": "Jasmine Home Service Co., Ltd.",
+    "chairperson": "李耿佑",
+    "company_address": "臺北市中山區民權西路20號二樓",
+    "zipcode": "104",
+    "addressCounty": "臺北市",
+    "parvalue": 10,
+    "capitalAmount": "1,000,000",
+    "totalshares": "100,000",
+    "totalcapital": "1,000,000",
+    "date": "113年 04 月 22 日",
+    "record_keeper": "李耿甫",
+    "meeting_place": "本公司會議室",
+    "present_directors": "李耿佑等 1 人出席",
+    "registrationNumber": null,  // 設立後填寫
+    "change_reason": "設立", // 設立/變更名稱/增資
+    "date_of_authorization": "中華民國 113 年 04 月 22 日",
+    "registrationType": "發起設立",
+    "preexamination_Number": "113026425",
+    "governmentFee": "1,000",
+    "companyId": null, // 設立後填寫
+    "year": 113,
+    "shares_in_attendance": "100,000",
+    "attendance_percentage": 100,
+    "business_Scope": "1、J101010建築物清潔服務業。 2、JA03010洗衣業。 3、JZ99990未分類其他服務業。...",
+    "Date_of_Adoption_of_the_Articles": "113年04月22日"
+  },
+  "table_data": {
+    "board_minutes_table": [
+      {
+        "item": "1",
+        "AGENDA_TITLE": "訂定公司章程案",
+        "AGENDA_DESC": "依公司法第129條規定，擬定公司章程，如附章程。",
+        "AGENDA_RESOLUTION": "經主席徵詢全體發起人無異議照案通過。"
+      }
     ],
-    "summaries": [
-        "原人股份有限公司董事會議事錄採取了在114年11月10日上午10時於公司會議室進行的會議，與會成員為徐峻祥和施皓文，徐峻祥為主席。",
-        "委託書顯示，原人股份有限公司委託黃勝平會計師辦理增資發行新股及改選董監事的事宜，並賦予相關的必要權限。",
-        "114年股東臨時會會議事錄記載了公司的臨時會議狀況，具體內容未詳述。"
+    "shareholders_minutes_table": [
+      {
+        "item": "1",
+        "AGENDA_TITLE": "訂定公司章程案",
+        "AGENDA_DESC": "依公司法第129條規定，擬定公司章程，如附章程。",
+        "AGENDA_RESOLUTION": "經主席徵詢全體發起人無異議照案通過。"
+      }
     ],
-    "merged_change": "原人股份有限公司在114年11月10日上午10時於公司會議室進行的董事會議中，出席成員包含徐峻祥和施皓文， 並由徐峻祥擔任主席。因應董事長須替換的需求，董事長由徐峻祥更換為Peter。",
-    "agend": [
-        {
-            "案由：": "改選董監事",
-            "說明：": "因任期屆滿，擬改選董監事，選出三席董事及一席監察人，任期三年，自改選之日起算。",
-            "決議：": "因第三席董事因故無法選出，故暫列缺額，將待日後重新補選，選任董事名單如下：\n董事：Peter (當選權數 773,425)。\n董事：林志鴻(當選權數 773,425)。\n監察人：黃勝平(當選權數 773,425)。",
-        },
-        {
-            "案由：": "遷址及變更公司名稱",
-            "說明：": "因應業務擴展，擬將公司遷址至台中市西屯區西屯路1號，並將公司名稱變更為「新時代有限公司」。",
-            "決議：": "全體出席董事無異議通過遷址及變更公司名稱案。經授權董事長代表公司辦理相關變更登記手續。",
-        },
+    "business_Scope_table": [
+      {"code": "J101010", "description": "建築物清潔服務業"},
+      {"code": "JA03010", "description": "洗衣業"},
+      {"code": "JZ99990", "description": "未分類其他服務業"}
     ],
-    "registration_data": {
-        "companyName": "原人股份有限公司",
-        "registrationNumber": "60299784",
-        "zipcode": "403", "address": "臺中市西區臺灣大道二段2號11樓之6",
-        "chairperson": "Peter", "change_type": "董事長替換",
-        "new_directors": [], "removal_directors": ["徐峻祥"], 
-        "directors_table":[
-            {"name": "Peter", "position": "director", "id": "A123456789", "address":"台中市西區五權路1-67號11樓之5", "shares":"500,000"},
-            {"name": "Joe", "position": "chairperson", "id": "B123456789", "address":"台中市西區五權路1-67號11樓之5", "shares":"500,000"}
-        ]
-    },
+    "director_table": [
+      {
+        "title": "董事長",
+        "name": "李耿佑",
+        "id": "F128873285",
+        "shares": 20000,
+        "director_address_code":"110",
+        "address": "新北市板橋區湳興里4鄰南雅西路二段7巷18之4號"
+      },
+      {
+        "title": "監察人",
+        "name": "李耿甫",
+        "id": "A123456789",
+        "shares": 0,
+        "director_address_code":"110",
+        "address": "台北市信義區忠孝東路一段1號"
+      }
+    ],
+    "management_table": [
+      // 經理人名單
+    ],
+    "leagalperson_table": [
+      {
+        "director_number": "3",
+        "legal_entity_name": "建白企業有限公司",
+        "legal_entity_id": "42783238",
+        "legal_entity_address": "臺北市中山區長安東路2段81號11樓之4"
+      }
+    ],
+    "shareholders_list": [
+      {
+        "item": "1",
+        "shareholderName": "李耿佑",
+        "shareholderId": "F128873285",
+        "shareholderAddress": "新北市板橋區湳興里4鄰南雅西路二段7巷18之4號",
+        "shareholder_shares": 20000,
+        "shareholder_amount": 200000
+      },
+      {
+        "item": "2",
+        "shareholderName": "高淑敏",
+        "shareholderId": "H223908974",
+        "shareholderAddress": "台北市信義區永吉路225巷9號2樓",
+        "shareholder_shares": 14500,
+        "shareholder_amount": 145000
+      },
+      {
+        "item": "3",
+        "shareholderName": "建白企業有限公司",
+        "shareholderId": "42783238",
+        "shareholderAddress": "臺北市中山區長安東路2段81號11樓之4",
+        "shareholder_shares": 65500,
+        "shareholder_amount": 655000
+      }
+    ]
+  }
 }
 
 
@@ -313,19 +371,17 @@ def generate_document():
     for doc in other_docs:
         print(f"- {doc}")
 
-    # 暫時停止執行後續部分
-    return
-
-    if not os.path.exists(TEMPLATE_FILE):
-        print(f"🚨 錯誤：找不到模板文件 {TEMPLATE_FILE}")
-        return
-
-    print("讀取模板：", TEMPLATE_FILE)
-    doc = Document(TEMPLATE_FILE)
+    # 4. 動態產生文件
+    print("\n--- 開始產生文件 ---")
+    
+    # 確保輸出目錄存在
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     reg = data["registration_data"]
-    
-    # 1. 頂層文字替換
+    agenda_data = data.get("agend", [])
+    AGENDA_HEADER_TAG = "{{board_minutes_table}}" 
+
+    # 頂層文字替換資料
     replacements = {
         "{{companyName}}": reg.get("companyName", ""),
         "{{registrationNumber}}": reg.get("registrationNumber", ""),
@@ -333,21 +389,47 @@ def generate_document():
         "{{address}}": reg.get("address", ""),
         "{{chairperson}}": reg.get("chairperson", ""),
     }
-    replace_all_placeholders(doc, replacements)
-    
-    # 2. 表格填充 (議程部分)
-    AGENDA_HEADER_TAG = "{{board_minutes_table}}" 
-    agenda_data = data.get("agend", [])
-    
-    add_agendas_to_table(doc, AGENDA_HEADER_TAG, agenda_data)
 
+    for doc_name in required_docs:
+        # 嘗試尋找對應的模板文件
+        # 優先順序: .docx -> .doc
+        template_path = None
+        possible_filenames = [f"{doc_name}.docx", f"{doc_name}.doc"]
+        
+        for fname in possible_filenames:
+            path = os.path.join(TEMPLATE_DIR, fname)
+            if os.path.exists(path):
+                template_path = path
+                break
+        
+        if not template_path:
+            print(f"⚠️ 跳過: 找不到 '{doc_name}' 的模板文件 (搜尋路徑: {TEMPLATE_DIR})")
+            continue
 
-    os.makedirs(OUTPUT_DIR, exist_ok=True)
-    # 更改輸出檔名以避免與舊的錯誤文件衝突
-    output_path = os.path.join(OUTPUT_DIR, "test_output_final_formatted_agendas.docx")
-    doc.save(output_path)
+        print(f"📄 處理模板: {template_path}")
+        
+        try:
+            doc = Document(template_path)
+            
+            # 1. 頂層文字替換
+            replace_all_placeholders(doc, replacements)
+            
+            # 2. 表格填充 (如果是董事會議事錄，且有議程資料)
+            # 這裡簡單判斷，如果文件內有該 Tag 才執行
+            # 或是根據 doc_name 判斷也可以，但 Tag 判斷較通用
+            if find_table_by_header(doc, AGENDA_HEADER_TAG):
+                 add_agendas_to_table(doc, AGENDA_HEADER_TAG, agenda_data)
 
-    print("✔ 成功輸出 →", output_path)
+            # 3. 存檔
+            output_filename = f"{doc_name}_Output.docx"
+            output_path = os.path.join(OUTPUT_DIR, output_filename)
+            doc.save(output_path)
+            print(f"   ✔ 已儲存: {output_path}")
+
+        except Exception as e:
+            print(f"   ❌ 處理失敗 '{doc_name}': {str(e)}")
+
+    print("\n✨ 所有文件處理完成")
 
 
 if __name__ == "__main__":
