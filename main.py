@@ -12,7 +12,7 @@ from docx import Document # 重新引入 docx 模組
 # 路徑設定
 HISTORY_DIR = "history_docs"
 # 請再次確認您的範本檔名和路徑是正確的
-TEMPLATE_PATH = "templates/變更登記表_範本.docx" 
+TEMPLATE_PATH = "templates/board_minutes_template.docx" 
 OUTPUT_DIR = "output"
 
 load_dotenv()

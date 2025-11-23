@@ -3,11 +3,18 @@ import json
 import re 
 import ast 
 from docx import Document 
+import os 
+import json 
+import re 
+import ast 
+from docx import Document 
 from docx.shared import Pt 
 from docx.oxml.ns import qn 
 from docx.table import _Row # 引入內部類別，用於 Row 的 XML 複製
 from copy import deepcopy # <-- 新增此行
 # ... (其他 import 保持不變)
+
+import registration_doc
 
 # -----------------------------------------------------
 # 設定路徑 (根據您的環境變數設置，請自行調整)
@@ -17,9 +24,7 @@ TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
 OUTPUT_DIR = os.path.join(BASE_DIR, "output")
 TEMPLATE_FILE = os.path.join(TEMPLATE_DIR, "board_minutes_template.docx")
 
-# -----------------------------------------------------
-# 輔助函式 (A): 表格 Row 複製
-# -----------------------------------------------------
+
 # -----------------------------------------------------
 # 輔助函式 (A): 表格 Row 區塊複製
 # -----------------------------------------------------
@@ -275,6 +280,42 @@ def replace_all_placeholders(doc, mapping):
 # -----------------------------------------------------
 def generate_document():
     
+    # 1. 取得變更類型輸入
+    user_input = input("請輸入變更類型 (多個類型請用逗號分隔): ")
+    change_types = [t.strip() for t in user_input.split(",")]
+    print(f"輸入的變更類型: {change_types}")
+
+    # 2. 取得 Required_Documents 及 other_Documents
+    required_docs = set()
+    other_docs = set()
+    
+    reg_list = registration_doc.data.get("Company_Registration_Complete_List", [])
+    
+    for c_type in change_types:
+        found = False
+        for item in reg_list:
+            if item["Registration_Type"] == c_type:
+                found = True
+                if "Required_Documents" in item:
+                    required_docs.update(item["Required_Documents"])
+                if "other_Documents" in item:
+                    other_docs.update(item["other_Documents"])
+                break
+        if not found:
+            print(f"⚠️ 警告: 找不到變更類型 '{c_type}' 的資料")
+
+    # 3. Print 出來
+    print("\n--- 應備文件 (Required Documents) ---")
+    for doc in required_docs:
+        print(f"- {doc}")
+        
+    print("\n--- 其他文件 (Other Documents) ---")
+    for doc in other_docs:
+        print(f"- {doc}")
+
+    # 暫時停止執行後續部分
+    return
+
     if not os.path.exists(TEMPLATE_FILE):
         print(f"🚨 錯誤：找不到模板文件 {TEMPLATE_FILE}")
         return
