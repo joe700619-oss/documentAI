@@ -1,0 +1,549 @@
+{
+    "table_data": {
+        "board_minutes_table": {
+            "tabel_ANCHOR": "[TABLE_BOARD_MINUTES_ANCHOR]",
+            "column_widths": [
+                1.5,
+                2.0,
+                14.5
+            ],
+            "agenda_rows": [
+                {
+                    "項目": "1",
+                    "案由": "訂定公司章程案"
+                },
+                {
+                    "項目": "",
+                    "說明": "依公司法第129條規定,擬定公司章程,如附章程。"
+                },
+                {
+                    "項目": "",
+                    "決議": "經主席徵詢全體發起人無異議照案通過。"
+                }
+            ]
+        },
+        "shareholders_minutes_table": {
+            "tabel_ANCHOR": "[TABLE_SHAREHOLDERS_MINUTES_ANCHOR]",
+            "column_widths": [
+                1.5,
+                2.0,
+                14.5
+            ],
+            "agenda_rows": [
+                {
+                    "項目": "1",
+                    "案由": "訂定公司章程案"
+                },
+                {
+                    "項目": "",
+                    "說明": "依公司法第129條規定,擬定公司章程,如附章程。"
+                },
+                {
+                    "項目": "",
+                    "決議": "經主席徵詢全體股東無異議照案通過。"
+                }
+            ]
+        },
+        "business_scope_table": {
+            "document_title": "所營事業",
+            "tabel_ANCHOR": "[TABLE_BUSINESS_SCOPE_ANCHOR]",
+            "column_widths": [
+                1.21,
+                3.7,
+                13.18
+            ],
+            "num_header_rows": 2,
+            "data_source_key": "business_scope",
+            "data_row_mapping": [
+                {
+                    "col_index": 0,
+                    "source_key": "id",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": false,
+                        "alignment": "center"
+                    }
+                },
+                {
+                    "col_index": 1,
+                    "source_key": "business_code",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": false,
+                        "alignment": "left"
+                    }
+                },
+                {
+                    "col_index": 2,
+                    "source_key": "business_scription",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": false,
+                        "alignment": "left"
+                    }
+                }
+            ],
+            "address_config": null,
+            "header_structure": {
+                "title": {
+                    "text": "所營事業",
+                    "format": {
+                        "size_pt": 16,
+                        "is_bold": true,
+                        "alignment": "center"
+                    }
+                },
+                "row_2_fields": [
+                    {
+                        "text": "編號",
+                        "format": {
+                            "size_pt": 12,
+                            "is_bold": true,
+                            "alignment": "center"
+                        }
+                    },
+                    {
+                        "text": "代碼",
+                        "format": {
+                            "size_pt": 12,
+                            "is_bold": true,
+                            "alignment": "center"
+                        }
+                    },
+                    {
+                        "text": "營業項目說明",
+                        "format": {
+                            "size_pt": 12,
+                            "is_bold": true,
+                            "alignment": "center"
+                        }
+                    }
+                ]
+            },
+            "business_scope": [
+                {
+                    "id": "1",
+                    "business_code": "J101010",
+                    "business_scription": "建築物清潔服務業"
+                },
+                {
+                    "id": "2",
+                    "business_code": "JA03010",
+                    "business_scription": "洗衣業"
+                },
+                {
+                    "id": "3",
+                    "business_code": "JZ99990",
+                    "business_scription": "未分類其他服務業"
+                }
+            ]
+        },
+        "director_table": {
+            "document_title": "董事、監察人名單",
+            "tabel_ANCHOR": "[TABLE_DIRECTORS_ANCHOR]",
+            "column_widths": [
+                0.75,
+                2.01,
+                5.61,
+                6.03,
+                3.49
+            ],
+            "num_header_rows": 3,
+            "data_source_key": "directors",
+            "data_row_mapping": [
+                {
+                    "col_index": 0,
+                    "source_key": "id",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": false,
+                        "alignment": "center"
+                    }
+                },
+                {
+                    "col_index": 1,
+                    "source_key": "position",
+                    "default_val": "",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": false,
+                        "alignment": "left"
+                    }
+                },
+                {
+                    "col_index": 2,
+                    "source_key": "name",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": false,
+                        "alignment": "left"
+                    }
+                },
+                {
+                    "col_index": 3,
+                    "source_key": "id_number",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": false,
+                        "alignment": "left"
+                    }
+                },
+                {
+                    "col_index": 4,
+                    "source_key": "shares",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": false,
+                        "alignment": "right"
+                    }
+                }
+            ],
+            "address_config": {
+                "source_key": "address",
+                "format": {
+                    "size_pt": 12,
+                    "is_bold": false,
+                    "alignment": "left"
+                },
+                "start_col": 1
+            },
+            "header_structure": {
+                "title": {
+                    "text": "董事、監察人名單",
+                    "format": {
+                        "size_pt": 16,
+                        "is_bold": true,
+                        "alignment": "center"
+                    }
+                },
+                "id_column": {
+                    "text": "編號",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": true,
+                        "alignment": "center"
+                    }
+                },
+                "row_2_fields": [
+                    {
+                        "text": "職稱",
+                        "format": {
+                            "size_pt": 12,
+                            "is_bold": true,
+                            "alignment": "center"
+                        }
+                    },
+                    {
+                        "text": "姓名(或法人名稱)",
+                        "format": {
+                            "size_pt": 12,
+                            "is_bold": true,
+                            "alignment": "center"
+                        }
+                    },
+                    {
+                        "text": "身分證號(或法人統一編號)",
+                        "format": {
+                            "size_pt": 12,
+                            "is_bold": true,
+                            "alignment": "center"
+                        }
+                    },
+                    {
+                        "text": "持有股份(股)",
+                        "format": {
+                            "size_pt": 12,
+                            "is_bold": true,
+                            "alignment": "center"
+                        }
+                    }
+                ],
+                "row_3_address": {
+                    "text": "(郵遞區號)住所或居所(或法人所在地)",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": true,
+                        "alignment": "center"
+                    }
+                }
+            },
+            "directors": [
+                {
+                    "id": "1",
+                    "position": "董事長",
+                    "name": "李耿佑",
+                    "id_number": "F128873285",
+                    "shares": "20,000",
+                    "address": "新北市板橋區湳興里4鄰南雅西路二段7巷18之4號"
+                },
+                {
+                    "id": "2",
+                    "position": "監察人",
+                    "name": "李耿甫",
+                    "id_number": "A123456789",
+                    "shares": "0",
+                    "address": "台北市信義區忠孝東路一段1號"
+                }
+            ]
+        },
+        "manager_table": {
+            "document_title": "經理人名單",
+            "tabel_ANCHOR": "[TABLE_MANAGER_ANCHOR]",
+            "column_widths": [
+                0.75,
+                5.42,
+                5.37,
+                6.38
+            ],
+            "num_header_rows": 3,
+            "data_source_key": "managers",
+            "data_row_mapping": [
+                {
+                    "col_index": 0,
+                    "source_key": "id",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": false,
+                        "alignment": "center"
+                    }
+                },
+                {
+                    "col_index": 1,
+                    "source_key": "name",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": false,
+                        "alignment": "left"
+                    }
+                },
+                {
+                    "col_index": 2,
+                    "source_key": "id_number",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": false,
+                        "alignment": "left"
+                    }
+                },
+                {
+                    "col_index": 3,
+                    "source_key": "onboarding_date",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": false,
+                        "alignment": "left"
+                    }
+                }
+            ],
+            "address_config": {
+                "source_key": "address",
+                "format": {
+                    "size_pt": 12,
+                    "is_bold": false,
+                    "alignment": "left"
+                },
+                "start_col": 1
+            },
+            "header_structure": {
+                "title": {
+                    "text": "經理人名單",
+                    "format": {
+                        "size_pt": 16,
+                        "is_bold": true,
+                        "alignment": "center"
+                    }
+                },
+                "id_column": {
+                    "text": "編號",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": true,
+                        "alignment": "center"
+                    }
+                },
+                "row_2_fields": [
+                    {
+                        "text": "姓名",
+                        "format": {
+                            "size_pt": 12,
+                            "is_bold": true,
+                            "alignment": "center"
+                        }
+                    },
+                    {
+                        "text": "身分證號",
+                        "format": {
+                            "size_pt": 12,
+                            "is_bold": true,
+                            "alignment": "center"
+                        }
+                    },
+                    {
+                        "text": "到職日期(年月日)",
+                        "format": {
+                            "size_pt": 12,
+                            "is_bold": true,
+                            "alignment": "center"
+                        }
+                    }
+                ],
+                "row_3_address": {
+                    "text": "(郵遞區號)住所或居所",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": true,
+                        "alignment": "center"
+                    }
+                }
+            },
+            "managers": []
+        },
+        "representative_of_the_company_table": {
+            "document_title": "所代表法人",
+            "tabel_ANCHOR": "[TABLE_REPRESENTATIVE_OF_THE_COMPANY_ANCHOR]",
+            "column_widths": [
+                0.75,
+                3.47,
+                7,
+                6.68
+            ],
+            "num_header_rows": 3,
+            "data_source_key": "representative_of_the_company",
+            "data_row_mapping": [
+                {
+                    "col_index": 0,
+                    "source_key": "id",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": false,
+                        "alignment": "center"
+                    }
+                },
+                {
+                    "col_index": 1,
+                    "source_key": "serialNumber",
+                    "default_val": "",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": false,
+                        "alignment": "left"
+                    }
+                },
+                {
+                    "col_index": 2,
+                    "source_key": "name",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": false,
+                        "alignment": "left"
+                    }
+                },
+                {
+                    "col_index": 3,
+                    "source_key": "id_number",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": false,
+                        "alignment": "left"
+                    }
+                }
+            ],
+            "address_config": {
+                "source_key": "address",
+                "format": {
+                    "size_pt": 12,
+                    "is_bold": false,
+                    "alignment": "left"
+                },
+                "start_col": 1
+            },
+            "header_structure": {
+                "title": {
+                    "text": "所代表法人",
+                    "format": {
+                        "size_pt": 16,
+                        "is_bold": true,
+                        "alignment": "center"
+                    }
+                },
+                "id_column": {
+                    "text": "序號",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": true,
+                        "alignment": "center"
+                    }
+                },
+                "row_2_fields": [
+                    {
+                        "text": "董監事編號",
+                        "format": {
+                            "size_pt": 12,
+                            "is_bold": true,
+                            "alignment": "center"
+                        }
+                    },
+                    {
+                        "text": "所代表法人名稱",
+                        "format": {
+                            "size_pt": 12,
+                            "is_bold": true,
+                            "alignment": "center"
+                        }
+                    },
+                    {
+                        "text": "法人統一編號",
+                        "format": {
+                            "size_pt": 12,
+                            "is_bold": true,
+                            "alignment": "center"
+                        }
+                    }
+                ],
+                "row_3_address": {
+                    "text": "(郵遞區號)法人所在地",
+                    "format": {
+                        "size_pt": 12,
+                        "is_bold": true,
+                        "alignment": "center"
+                    }
+                }
+            },
+            "representative_of_the_company": [
+                {
+                    "id": "1",
+                    "serialNumber": "3",
+                    "name": "建白企業有限公司",
+                    "id_number": "42783238",
+                    "address": "臺北市中山區長安東路2段81號11樓之4"
+                }
+            ]
+        },
+        "shareholders_list": [
+            {
+                "item": "1",
+                "shareholderName": "李耿佑",
+                "shareholderId": "F128873285",
+                "shareholderAddress": "新北市板橋區湳興里4鄰南雅西路二段7巷18之4號",
+                "shareholder_shares": 20000,
+                "shareholder_amount": 200000
+            },
+            {
+                "item": "2",
+                "shareholderName": "高淑敏",
+                "shareholderId": "H223908974",
+                "shareholderAddress": "台北市信義區永吉路225巷9號2樓",
+                "shareholder_shares": 14500,
+                "shareholder_amount": 145000
+            },
+            {
+                "item": "3",
+                "shareholderName": "建白企業有限公司",
+                "shareholderId": "42783238",
+                "shareholderAddress": "臺北市中山區長安東路2段81號11樓之4",
+                "shareholder_shares": 65500,
+                "shareholder_amount": 655000
+            }
+        ]
+    }
+}

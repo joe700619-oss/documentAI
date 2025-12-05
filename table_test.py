@@ -5,6 +5,38 @@ from docx.shared import Cm, Pt
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.table import WD_ALIGN_VERTICAL # 確保匯入，用於 set_cell_format 中的垂直置中
 
+
+def load_table_config(filename: str) -> dict:
+    """
+    從指定的 JSON 檔案中載入表格配置。
+    """
+    # 組合完整的檔案路徑 (這裡假設在同一個目錄下)
+    file_path = os.path.join(os.path.dirname(__file__), filename)
+    
+    # 使用 try...except 處理檔案找不到的錯誤
+    try:
+        # 使用 with open() 開啟檔案，確保檔案在讀取後會自動關閉
+        # 'r' 表示以讀取 (read) 模式開啟
+        # encoding='utf-8' 確保能正確處理中文
+        with open(file_path, 'r', encoding='utf-8') as f:
+            # 使用 json.load() 函式，將檔案內容解析成 Python 字典 (dict)
+            table_configs = json.load(f)
+            return table_configs
+            
+    except FileNotFoundError:
+        print(f"錯誤：找不到指定的配置檔案：{filename}！請確認路徑是否正確。")
+        return {} # 找不到檔案時，回傳一個空的字典，避免程式崩潰
+    except json.JSONDecodeError:
+        print(f"錯誤：檔案 {filename} 的 JSON 格式不正確，無法解析。")
+        return {}
+
+data = load_table_config('tableStructure.json')
+
+if data:
+    print("成功載入表格配置！")
+
+
+
 # --- 全域對齊方式對應表 ---
 ALIGNMENT_MAP = {
     "left": WD_ALIGN_PARAGRAPH.LEFT,
@@ -282,191 +314,6 @@ def populate_universal_table(table, table_data, num_cols, num_header_rows):
             )
 
 # ----------------------------------------------------
-# --- 移除冗餘的 TABLE_POPULATORS (因為不再需要) ---
-# ----------------------------------------------------
-# TABLE_POPULATORS = { ... } # 已移除
-# ----------------------------------------------------
-
-
-# ==========================================================
-# 最終執行區塊
-# ==========================================================
-
-# Embedded data (已移除 director_table 中的多餘逗號)
-data = {
-"director_table": {
-        "document_title": "董事、監察人名單",
-        "tabel_ANCHOR": "[TABLE_DIRECTORS_ANCHOR]",
-        "column_widths": [0.75, 2.01, 5.61, 6.03, 3.49],
-        "num_header_rows": 3,
-        "data_source_key": "directors", 
-        "data_row_mapping": [
-            {"col_index": 0, "source_key": "id", "format": {"size_pt": 12, "is_bold": False, "alignment": "center"}},
-            {"col_index": 1, "source_key": "position", "default_val": "", "format": {"size_pt": 12, "is_bold": False, "alignment": "left"}},
-            {"col_index": 2, "source_key": "name", "format": {"size_pt": 12, "is_bold": False, "alignment": "left"}},
-            {"col_index": 3, "source_key": "id_number", "format": {"size_pt": 12, "is_bold": False, "alignment": "left"}},
-            {"col_index": 4, "source_key": "shares", "format": {"size_pt": 12, "is_bold": False, "alignment": "right"}},
-        ],
-        "address_config": {
-            "source_key": "address",
-            "format": {"size_pt": 12, "is_bold": False, "alignment": "left"},
-            "start_col": 1,
-        },
-        "header_structure": {
-            "title": {
-                "text": "董事、監察人名單",
-                "format": {"size_pt": 16, "is_bold": True, "alignment": "center"}
-            },
-            "id_column": {
-                "text": "編號",
-                "format": {"size_pt": 12, "is_bold": True, "alignment": "center"}
-            },
-            "row_2_fields": [
-                {"text": "職稱", "format": {"size_pt": 12, "is_bold": True, "alignment": "center"}},
-                {"text": "姓名(或法人名稱)", "format": {"size_pt": 12, "is_bold": True, "alignment": "center"}},
-                {"text": "身分證號(或法人統一編號)", "format": {"size_pt": 12, "is_bold": True, "alignment": "center"}},
-                {"text": "持有股份(股)", "format": {"size_pt": 12, "is_bold": True, "alignment": "center"}}
-            ],
-            "row_3_address": {
-                "text": "(郵遞區號)住所或居所(或法人所在地)",
-                "format": {"size_pt": 12, "is_bold": True, "alignment": "center"}
-            }
-        },
-        "directors": [
-            {
-                "id": "001", "position": "董事長", "name": "李耿佑", "id_number": "F128873285", "shares": "20,000",
-                "address": "(220) 新北市板橋區湳興里 4 鄰南雅西路二段 7 巷 18 之 4 號"
-            },
-            {
-                "id": "002", "position": "監察人", "name": "李耿甫", "id_number": "A123456789", "shares": "0",
-                "address": "台北市信義區忠孝東路一段1號"
-            }
-        ]
-    },
-    "manager_table": {
-        "document_title": "經理人名單",
-        "tabel_ANCHOR": "[TABLE_MANAGER_ANCHOR]",
-        "column_widths": [0.75, 5.42, 5.37, 6.38],
-        "num_header_rows": 3,
-        "data_source_key": "managers",
-        "data_row_mapping": [
-            {"col_index": 0, "source_key": "id", "format": {"size_pt": 12, "is_bold": False, "alignment": "center"}},
-            {"col_index": 1, "source_key": "name", "format": {"size_pt": 12, "is_bold": False, "alignment": "left"}},
-            {"col_index": 2, "source_key": "id_number", "format": {"size_pt": 12, "is_bold": False, "alignment": "left"}},
-            {"col_index": 3, "source_key": "onboarding_date", "format": {"size_pt": 12, "is_bold": False, "alignment": "left"}},
-        ],
-        "address_config": {
-            "source_key": "address",
-            "format": {"size_pt": 12, "is_bold": False, "alignment": "left"},
-            "start_col": 1,
-        },
-        "header_structure": {
-            "title": {
-                "text": "經理人名單",
-                "format": {"size_pt": 16, "is_bold": True, "alignment": "center"}
-            },
-            "id_column": {
-                "text": "編號",
-                "format": {"size_pt": 12, "is_bold": True, "alignment": "center"}
-            },
-            "row_2_fields": [
-                {"text": "姓名", "format": {"size_pt": 12, "is_bold": True, "alignment": "center"}},
-                {"text": "身分證號", "format": {"size_pt": 12, "is_bold": True, "alignment": "center"}},
-                {"text": "到職日期(年月日)", "format": {"size_pt": 12, "is_bold": True, "alignment": "center"}},
-            ],
-            "row_3_address": {
-                "text": "(郵遞區號)住所或居所",
-                "format": {"size_pt": 12, "is_bold": True, "alignment": "center"}
-            }
-        },
-        "managers": [
-            {
-                "id": "001", "name": "joe", "id_number": "F128873285", "onboarding_date": "114年11月29日",
-                "address": "(220) 新北市板橋區湳興里 4 鄰南雅西路二段 7 巷 18 之 4 號"
-            }
-        ]
-    },
-    "representative_of_the_company_table": {
-        "document_title": "所代表法人",
-        "tabel_ANCHOR": "[TABLE_REPRESENTATIVE_OF_THE_COMPANY_ANCHOR]",
-        "column_widths": [0.75, 3.47, 7, 6.68],
-        "num_header_rows": 3,
-        "data_source_key": "representative_of_the_company",
-        "data_row_mapping": [
-            {"col_index": 0, "source_key": "id", "format": {"size_pt": 12, "is_bold": False, "alignment": "center"}},
-            {"col_index": 1, "source_key": "serialNumber", "default_val": "", "format": {"size_pt": 12, "is_bold": False, "alignment": "left"}},
-            {"col_index": 2, "source_key": "name", "format": {"size_pt": 12, "is_bold": False, "alignment": "left"}},
-            {"col_index": 3, "source_key": "id_number", "format": {"size_pt": 12, "is_bold": False, "alignment": "left"}},
-        ],
-        "address_config": {
-            "source_key": "address",
-            "format": {"size_pt": 12, "is_bold": False, "alignment": "left"},
-            "start_col": 1,
-        },
-        "header_structure": {
-            "title": {
-                "text": "所代表法人",
-                "format": {"size_pt": 16, "is_bold": True, "alignment": "center"}
-            },
-            "id_column": {
-                "text": "序號",
-                "format": {"size_pt": 12, "is_bold": True, "alignment": "center"}
-            },
-            "row_2_fields": [
-                {"text": "董監事編號", "format": {"size_pt": 12, "is_bold": True, "alignment": "center"}},
-                {"text": "所代表法人名稱", "format": {"size_pt": 12, "is_bold": True, "alignment": "center"}},
-                {"text": "法人統一編號", "format": {"size_pt": 12, "is_bold": True, "alignment": "center"}},
-            ],
-            "row_3_address": {
-                "text": "(郵遞區號)法人所在地",
-                "format": {"size_pt": 12, "is_bold": True, "alignment": "center"}
-            }
-        },
-        "representative_of_the_company": [
-            {
-                "id": "001", "serialNumber": "01~01", "name": "joe", "id_number": "F128873285",
-                "address": "(220) 新北市板橋區湳興里 4 鄰南雅西路二段 7 巷 18 之 4 號"
-            }
-        ]
-    },
-    "business_scope_table": {
-        "document_title": "所營事業",
-        "tabel_ANCHOR": "[TABLE_BUSINESS_SCOPE_ANCHOR]",
-        "column_widths": [1.21, 3.7, 13.18],
-        "num_header_rows": 2,
-        "data_source_key": "business_scope",
-        "data_row_mapping": [
-            {"col_index": 0, "source_key": "id", "format": {"size_pt": 12, "is_bold": False, "alignment": "center"}},
-            {"col_index": 1, "source_key": "business_code", "format": {"size_pt": 12, "is_bold": False, "alignment": "left"}},
-            {"col_index": 2, "source_key": "business_scription", "format": {"size_pt": 12, "is_bold": False, "alignment": "left"}},
-        ],
-        "address_config": None,
-        "header_structure": {
-            "title": {
-                "text": "所營事業",
-                "format": {"size_pt": 16, "is_bold": True, "alignment": "center"}
-            },
-            "row_2_fields": [
-                {"text": "編號", "format": {"size_pt": 12, "is_bold": True, "alignment": "center"}},
-                {"text": "代碼", "format": {"size_pt": 12, "is_bold": True, "alignment": "center"}},
-                {"text": "營業項目說明", "format": {"size_pt": 12, "is_bold": True, "alignment": "center"}},
-            ],
-        },
-        "business_scope": [
-            {
-                "id": "001", "business_code": "J101010", "business_scription": "建築物清潔服務業", 
-            },
-            {
-                "id": "002", "business_code": "JA03010", "business_scription": "洗衣業", 
-            },
-            {
-                "id": "003", "business_code": "JZ99990", "business_scription": "未分類其他服務業", 
-            },
-        ]
-    }
-}
-
-
 # 載入文件
 document = Document(r"C:\Users\joe70\PythonProject\documentAI\templates\設立登記表.docx")
 
@@ -474,8 +321,15 @@ document = Document(r"C:\Users\joe70\PythonProject\documentAI\templates\設立�
 # 核心執行：迭代所有表格數據並插入/填充
 # --------------------------------------
 
-for table_key, table_data in data.items():
+# 從 JSON 中取得 table_data，如果不存在則使用空字典
+tables_config = data.get("table_data", {})
+
+for table_key, table_data in tables_config.items():
     
+    # 檢查是否為有效的表格設定 (必須是字典且包含 column_widths 和 header_structure)
+    if not isinstance(table_data, dict) or "column_widths" not in table_data or "header_structure" not in table_data:
+        continue
+
     anchor_text = table_data.get("tabel_ANCHOR")
     num_cols = len(table_data.get("column_widths"))
     num_header_rows = table_data.get("num_header_rows", 3)
