@@ -1,0 +1,126 @@
+{
+    "basicInformation": {
+        "companyName": "測試有限公司",
+        "companyId": "12345678",
+        "companyAddress": "403台中市西區五權路1-67號",
+        "companyPhoneNumber": "04-22222222",
+        "chairmanName": "王大同",
+        "zipcode": "403",
+        "totalshares": "100,000股",
+        "parvalue": "10元",
+        "totalcapital": "1,000,000元"
+    },
+    "replacements": [
+        {
+            "old_text": "三米有限公司",
+            "new_text": "測試有限公司"
+        },
+        {
+            "old_text": "12345678",
+            "new_text": "88888888"
+        },
+        {
+            "old_text": "張大明",
+            "new_text": "王大同"
+        }
+    ],
+    "tableData": {
+        "director_table": {
+            "document_title": "董事、監察人名單",
+            "directors": [
+                {
+                    "id": "1",
+                    "position": "董事長",
+                    "name": "李耿佑",
+                    "id_number": "F128873285",
+                    "shares": "80,000股",
+                    "address": "新北市板橋區湳興里4鄰南雅西路二段7巷18之4號"
+                },
+                {
+                    "id": "2",
+                    "position": "監察人",
+                    "name": "李耿甫",
+                    "id_number": "A123456789",
+                    "shares": "20,000股",
+                    "address": "台北市信義區忠孝東路一段1號"
+                }
+            ]
+        },
+        "shareholder_table": {
+            "document_title": "股東名單",
+            "shareholders": [
+                {
+                    "id": "1",
+                    "position": "股東",
+                    "name": "李耿佑",
+                    "id_number": "F128873285",
+                    "shares": "80,000股",
+                    "capital": "800,000元",
+                    "address": "新北市板橋區湳興里4鄰南雅西路二段7巷18之4號"
+                },
+                {
+                    "id": "2",
+                    "position": "股東",
+                    "name": "李耿甫",
+                    "id_number": "A123456789",
+                    "shares": "20,000股",
+                    "capital": "200,000元",
+                    "address": "台北市信義區忠孝東路一段1號"
+                }
+            ]
+        },
+        "business_items_table": {
+            "document_title": "營業項目",
+            "target_start_text": "本公司所營事業如下：",
+            "business_items": [
+                {
+                    "id": "1",
+                    "code": "F501990",
+                    "name": "其他設計服務業"
+                },
+                {
+                    "id": "2",
+                    "code": "ZZ99999",
+                    "name": "除許可業務外，得經營法令非禁止或限制之業務。"
+                },
+                {
+                    "id": "3",
+                    "code": "F502990",
+                    "name": "其他清潔服務業"
+                }
+            ]
+        },
+        "history_of_company_charter_table": {
+            "document_title": "章程修訂日期",
+            "target_start_text": "章程修訂如下：",
+            "business_items": [
+                {
+                    "id": "1",
+                    "edition_date": "本章程訂立於民國112年1月1日"
+                },
+                {
+                    "id": "2",
+                    "edition_date": "本章程訂立於民國112年12月31日"
+                },
+                {
+                    "id": "3",
+                    "edition_date": "本章程訂立於民國113年12月31日"
+                }
+            ]
+        },
+        "shareholderOfLimitedLiabilityCompany_table": {
+            "document_title": "有限公司股東名單",
+            "target_start_text": "本公司股東姓名或名稱及其出資額如下：",
+            "shareholders": [
+                {
+                    "name": "股東姓名或名稱",
+                    "capital": "出資額"
+                },
+                {
+                    "name": "張三",
+                    "capital": "1,000元"
+                }
+            ]
+        }
+    }
+}
