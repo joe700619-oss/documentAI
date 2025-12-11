@@ -261,6 +261,26 @@
             ]
         },
         {
+            "Registration_Type": "測試",
+            "org_type": "股份有限公司",
+            "Required_Documents": [
+                {
+                    "type": "T",
+                    "name": "設立登記表"
+                }
+            ],
+            "other_Documents": [
+                {
+                    "type": "O",
+                    "name": "董事身分證影本"
+                },
+                {
+                    "type": "O",
+                    "name": "股東名冊影本"
+                }
+            ]
+        },
+        {
             "Registration_Type": "default",
             "org_type": "通用",
             "Required_Documents": [

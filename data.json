@@ -1,14 +1,38 @@
 {
     "basicInformation": {
-        "companyName": "測試有限公司",
+        "companyName": "測試股份有限公司",
+        "companyName_en": "Test Co., Ltd.",
         "companyId": "12345678",
+        "companyType": "股份有限公司",
         "companyAddress": "403台中市西區五權路1-67號",
         "companyPhoneNumber": "04-22222222",
         "chairmanName": "王大同",
         "zipcode": "403",
-        "totalshares": "100,000股",
-        "parvalue": "10元",
-        "totalcapital": "1,000,000元"
+        "authorizedCapital": "10,000,000",
+        "authorizedShares": "1,000,000",
+        "parvalue": "10",
+        "paidincapital": "1,000,000",
+        "totalshares": "100,000",
+        "applicationReason": "設立",
+        "applicationDate": "民國114年10月1日上午9點",
+        "governmentFee": "1000",
+        "applicationNumber": "12345678",
+        "shareholderMeetingDate": "民國114年10月1日",
+        "shareholderMeetingPlace": "台北市信義區忠孝東路一段1號",
+        "shareholderMeetingChairman": "王大同",
+        "shareholderMeetingMinuteTaker": "陳小華",
+        "shareholderMeetingTitle": "發起人",
+        "boardMeetingDate": "民國114年10月1日上午10點",
+        "boardMeetingPlace": "本公司會議室",
+        "boardMeetingChairman": "王大同",
+        "boardMeetingMinuteTaker": "陳小華",
+        "directorName": "李耿佑",
+        "supervisorName": "李耿甫",
+        "termofOffice_director": "自民國114年10月1日至民國117年9月30日",
+        "termofOffice_supervisor": "自民國114年10月1日至民國117年9月30日",
+        "numberOfDirectors": "1",
+        "numberOfSupervisors": "1",
+        "dateOfAdoption": "民國114年10月1日"
     },
     "replacements": [
         {
@@ -43,6 +67,19 @@
                     "id_number": "A123456789",
                     "shares": "20,000股",
                     "address": "台北市信義區忠孝東路一段1號"
+                }
+            ]
+        },
+        "manager_table": {
+            "document_title": "經理人名單",
+            "managers": [
+                {
+                    "id": "1",
+                    "startDate": "民國114年10月1日",
+                    "name": "李耿佑",
+                    "id_number": "F128873285",
+                    "shares": "80,000股",
+                    "address": "新北市板橋區湳興里4鄰南雅西路二段7巷18之4號"
                 }
             ]
         },
@@ -90,10 +127,192 @@
                 }
             ]
         },
+        "shareholder_meeting_table": {
+            "document_title": "股東會議事錄",
+            "shareholder_meeting": [
+                {
+                    "id": "1",
+                    "reason": "案由:",
+                    "reason_text": "設立登記",
+                    "description": "說明:",
+                    "description_text": "依法設立登記",
+                    "resolution": "決議:",
+                    "resolution_text": "全體出席股東一致決，同意本章程。"
+                },
+                {
+                    "id": "2",
+                    "reason": "案由:",
+                    "reason_text": "測試2",
+                    "description": "說明:",
+                    "description_text": "測試2",
+                    "resolution": "決議:",
+                    "resolution_text": "測試2"
+                }
+            ]
+        },
+        "board_meeting_table": {
+            "document_title": "董事會議事錄",
+            "board_meeting": [
+                {
+                    "id": "1",
+                    "reason": "選任董事:",
+                    "reason_text": "選任董事長",
+                    "description": "說明:",
+                    "description_text": "依法選任董事長",
+                    "resolution": "決議:",
+                    "resolution_text": "全體出席董事一致決，推選李耿佑為董事長。"
+                },
+                {
+                    "id": "2",
+                    "reason": "選任監察人:",
+                    "reason_text": "選任監察人",
+                    "description": "說明:",
+                    "description_text": "依法選任監察人",
+                    "resolution": "決議:",
+                    "resolution_text": "全體出席董事一致決，推選李耿甫為監察人。"
+                }
+            ]
+        },
+        "company_charter_table_1": {
+            "document_title": "公司章程_總則",
+            "target_start_text": "第一章 總則",
+            "articles_1": [
+                {
+                    "item": "第1條",
+                    "content": "本公司依照公司法規定組織之，定名為三米股份有限公司。"
+                },
+                {
+                    "item": "第2條",
+                    "content": "本公司所營事業如下：\n1. J101010 建築物清潔服務業\n2. ZZ99999除許可業務外，得經營法令非禁止或限制之業務。"
+                },
+                {
+                    "item": "第3條",
+                    "content": "本公司設總公司於台中市，必要時經董事會之決議得在國內外設立分公司。"
+                },
+                {
+                    "item": "第4條",
+                    "content": "本公司之公告方法依照公司法第28條規定辦理。"
+                },
+                {
+                    "item": "第5條",
+                    "content": "本公司為業務需要得對外保證。"
+                }
+            ]
+        },
+        "company_charter_table_2": {
+            "document_title": "公司章程_股份",
+            "target_start_text": "第二章 股份",
+            "articles_2": [
+                {
+                    "item": "第6條",
+                    "content": "本公司資本額定為新臺幣1,000元，分為 100  股，每股金額新臺幣 10  元，得分次發行。"
+                },
+                {
+                    "item": "第7條",
+                    "content": "股東名簿記載之變更，於股東常會開會前30日內，股東臨時會開會前15日內，或公司決定分派股息及紅利或其他利益之基準日前5日內，不得為之。"
+                },
+                {
+                    "item": "第8條",
+                    "content": "本公司依公司法收買之庫藏股，轉讓之對象包括符合一定條件之控制或從屬公司員工。\n本公司員工認股權憑證發給對象，包括符合一定條件之控制或從屬公司員工。\n本公司發行新股時，承購股份之員工包括符合一定條件之控制或從屬公司員工。\n本公司發行限制員工權利新股之對象包括符合一定條件之控制或從屬公司員工。"
+                }
+            ]
+        },
+        "company_charter_table_3": {
+            "document_title": "公司章程_股東會",
+            "target_start_text": "第三章 股東會",
+            "articles_3": [
+                {
+                    "item": "第9條",
+                    "content": "股東會分常會及臨時會2種。常會每年至少召集一次，於每會計年度終了後6個月內由董事會依法召開；臨時會於必要時依法召集之。"
+                },
+                {
+                    "item": "第10條",
+                    "content": "本公司股東會開會時，得以視訊會議或其他經中央主管機關公告之方式為之。股東名簿記載之變更，於股東常會開會前30日內，股東臨時會開會前15日內，或公司決定分派股息及紅利或其他利益之基準日前5日內，不得為之。"
+                },
+                {
+                    "item": "第11條",
+                    "content": "本公司各股東，每普通股有一表決權。但公司依法持有自己之股份，無表決權。"
+                },
+                {
+                    "item": "第12條",
+                    "content": "股東會之決議，除公司法另有規定外，應有代表已發行股份總數過半數股東之出席，以出席股東表決權過半數之同意行之。"
+                },
+                {
+                    "item": "第13條",
+                    "content": "本公司僅為政府或法人股東一人所組織時，股東會職權由董事會行使，不適用本章程有關股東會之規定。"
+                }
+            ]
+        },
+        "company_charter_table_4": {
+            "document_title": "公司章程_董事及監察人",
+            "target_start_text": "第四章 董事及監察人",
+            "articles_4": [
+                {
+                    "item": "第14條",
+                    "content": "本公司設董事3人，監察人1人，任期三年，由股東會就有行為能力之人選任，得連選連任。"
+                },
+                {
+                    "item": "第15條",
+                    "content": "董事會由董事組織之，由三分之二以上董事之出席，及出席董事過半數之同意互選董事長1人及副董事長1人，董事長對外代表公司\n董事開會時，董事得由其他董事代理出席。"
+                },
+                {
+                    "item": "第16條",
+                    "content": "於經本公司全體董事同意，董事就當次董事會議案得以書面方式行使表決權，而不實際集會。"
+                },
+                {
+                    "item": "第17條",
+                    "content": "全體董事及監察人之報酬，授權董事會議依同業通常水準支給之。"
+                }
+            ]
+        },
+        "company_charter_table_5": {
+            "document_title": "公司章程_經理人",
+            "target_start_text": "第五章  經理人",
+            "articles_5": [
+                {
+                    "item": "第18條",
+                    "content": "本公司得設經理人，其委任、解任及報酬，依照公司法第29條規定辦理。"
+                }
+            ]
+        },
+        "company_charter_table_6": {
+            "document_title": "公司章程_會計",
+            "target_start_text": "第六章  會計",
+            "articles_6": [
+                {
+                    "item": "第19條",
+                    "content": "本公司每屆會計年度終了，董事會應編造營業報告書、財務報表及盈餘分派或虧損撥補之議案，並提請股東常會承認。"
+                },
+                {
+                    "item": "第20條",
+                    "content": "本公司股息定為年息1分，但公司無盈餘時，不得分派。"
+                },
+                {
+                    "item": "第21條",
+                    "content": "公司年度如有獲利，應提撥100元為員工酬勞。但公司尚有累積虧損時，應預先保留彌補數額。"
+                },
+                {
+                    "item": "第22條",
+                    "content": "本公司分派員工酬勞之對象包括符合一定條件之控制或從屬公司員工。"
+                },
+                {
+                    "item": "第23條",
+                    "content": "公司年度總決算如有盈餘，應先提繳稅款、彌補累積虧損，次提10%為法定盈餘公積，但法定盈餘公積已達實收資本額時，不在此限。其餘除派付股息外，如尚有盈餘，再由股東會決議分派股東紅利。"
+                },
+                {
+                    "item": "第24條",
+                    "content": "本章程未訂事項，悉依公司法規定辦理。"
+                },
+                {
+                    "item": "第25條",
+                    "content": "章程修訂如下：\n本章程訂立於民國112年1月1日"
+                }
+            ]
+        },
         "history_of_company_charter_table": {
             "document_title": "章程修訂日期",
             "target_start_text": "章程修訂如下：",
-            "business_items": [
+            "dateOfAdoption": [
                 {
                     "id": "1",
                     "edition_date": "本章程訂立於民國112年1月1日"
