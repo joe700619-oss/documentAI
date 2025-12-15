@@ -18,12 +18,10 @@
         "governmentFee": "1000",
         "applicationNumber": "12345678",
         "shareholderMeetingDate": "民國114年10月1日",
-        "shareholderMeetingPlace": "台北市信義區忠孝東路一段1號",
         "shareholderMeetingChairman": "王大同",
         "shareholderMeetingMinuteTaker": "陳小華",
         "shareholderMeetingTitle": "發起人",
         "boardMeetingDate": "民國114年10月1日上午10點",
-        "boardMeetingPlace": "本公司會議室",
         "boardMeetingChairman": "王大同",
         "boardMeetingMinuteTaker": "陳小華",
         "directorName": "李耿佑",
@@ -78,7 +76,6 @@
                     "startDate": "民國114年10月1日",
                     "name": "李耿佑",
                     "id_number": "F128873285",
-                    "shares": "80,000股",
                     "address": "新北市板橋區湳興里4鄰南雅西路二段7巷18之4號"
                 }
             ]
@@ -103,6 +100,18 @@
                     "shares": "20,000股",
                     "capital": "200,000元",
                     "address": "台北市信義區忠孝東路一段1號"
+                }
+            ]
+        },
+        "Legal_Entity_Represented_table": {
+            "document_title": "所代表法人",
+            "LegalEntityRepresented": [
+                {
+                    "id": "1",
+                    "DirectorNumber": "01",
+                    "name": "ABC投資股份有限公司",
+                    "id_number": "88888888",
+                    "address": "新北市板橋區湳興里4鄰南雅西路二段7巷18之4號"
                 }
             ]
         },
@@ -312,7 +321,7 @@
         "history_of_company_charter_table": {
             "document_title": "章程修訂日期",
             "target_start_text": "章程修訂如下：",
-            "dateOfAdoption": [
+            "HistoryOfAmendmentsToTheArticles": [
                 {
                     "id": "1",
                     "edition_date": "本章程訂立於民國112年1月1日"

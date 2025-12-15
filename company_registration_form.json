@@ -1,0 +1,97 @@
+{
+    "basicInformation": {
+        "application_reason": "設立",
+        "registration_type": "遷址(同縣市)",
+        "company_type": "股份有限公司",
+        "company_name": "測試股份有限公司",
+        "company_name_en": "Test Co., Ltd.",
+        "company_id": "12345678",
+        "company_address": "403台中市西區五權路1-67號",
+        "company_phone_number": "04-22222222",
+        "chairman_name": "王大同",
+        "zipcode": "403",
+        "authorized_capital": "10,000,000",
+        "authorized_shares": "1,000,000",
+        "parvalue": "10",
+        "paidincapital": "1,000,000",
+        "total_shares": "100,000",
+        "application_number": "12345678",
+        "termofOffice_director": "自民國114年10月1日至民國117年9月30日",
+        "termofOffice_supervisor": "自民國114年10月1日至民國117年9月30日",
+        "number_of_directors": "1",
+        "number_of_supervisors": "1",
+        "date_of_adoption": "民國114年10月1日"
+    },
+    "replacements": [
+        {
+            "old_text": "三米有限公司",
+            "new_text": "測試有限公司"
+        },
+        {
+            "old_text": "12345678",
+            "new_text": "88888888"
+        },
+        {
+            "old_text": "張大明",
+            "new_text": "王大同"
+        }
+    ],
+    "tableData": {
+        "director_table": {
+            "document_title": "董事、監察人名單",
+            "directors": [
+                {
+                    "id": "1",
+                    "position": "董事長",
+                    "name": "李耿佑",
+                    "id_number": "F128873285",
+                    "shares": "80,000股",
+                    "address": "新北市板橋區湳興里4鄰南雅西路二段7巷18之4號"
+                },
+                {
+                    "id": "2",
+                    "position": "監察人",
+                    "name": "李耿甫",
+                    "id_number": "A123456789",
+                    "shares": "20,000股",
+                    "address": "台北市信義區忠孝東路一段1號"
+                }
+            ]
+        },
+        "manager_table": {
+            "document_title": "經理人名單",
+            "managers": [
+                {
+                    "id": "1",
+                    "startDate": "民國114年10月1日",
+                    "name": "李耿佑",
+                    "id_number": "F128873285",
+                    "address": "新北市板橋區湳興里4鄰南雅西路二段7巷18之4號"
+                }
+            ]
+        },
+        "Legal_Entity_Represented_table": {
+            "document_title": "所代表法人",
+            "LegalEntityRepresented": [
+                {
+                    "id": "1",
+                    "DirectorNumber": "01",
+                    "name": "ABC投資股份有限公司",
+                    "id_number": "88888888",
+                    "address": "新北市板橋區湳興里4鄰南雅西路二段7巷18之4號"
+                }
+            ]
+        },
+        "business_items_table": {
+            "document_title": "營業項目",
+            "target_start_text": "本公司所營事業如下：",
+            "business_items": [
+                {
+                    "id": "1",
+                    "code": "F501990",
+                    "name": "其他設計服務業"
+                }
+            ]
+        }
+    }
+}

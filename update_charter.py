@@ -29,19 +29,17 @@ def format_replacement_content(table_config):
     # 判斷資料類型並格式化
     if "business_items" in table_config:
         items = table_config["business_items"]
-        # 檢查是營業項目還是章程修訂日期
-        if items and "code" in items[0]:
-            # 營業項目格式: id. code name
-            lines = [target_text]
-            for item in items:
-                lines.append(f"{item['id']}. {item['code']} {item['name']}")
-            return "\n".join(lines)
-        elif items and "edition_date" in items[0]:
-            # 章程修訂日期格式
-            lines = [target_text]
-            for item in items:
-                lines.append(f"{item['id']}. {item['edition_date']}")
-            return "\n".join(lines)
+        lines = [target_text]
+        for item in items:
+            lines.append(f"{item['id']}. {item['code']} {item['name']}")
+        return "\n".join(lines) 
+
+    if "HistoryOfAmendmentsToTheArticles" in table_config:
+        items = table_config["HistoryOfAmendmentsToTheArticles"]
+        lines = [target_text]
+        for item in items:
+            lines.append(f"{item['name']}：{item['capital']}")
+        return "\n".join(lines)            
     
     if "shareholders" in table_config:
         items = table_config["shareholders"]

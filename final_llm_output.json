@@ -1,0 +1,223 @@
+{
+  "basicInformation": {
+    "application_reason": "遷址到台北市信義區基隆路一段299號",
+    "registration_type": "",
+    "company_type": "股份有限公司",
+    "company_name": "原人股份有限公司",
+    "company_name_en": "",
+    "company_id": "60299784",
+    "company_address": "臺中市西區臺灣大道二段2號11樓之6",
+    "company_phone_number": "(04) 23599710",
+    "chairman_name": "徐峻祥",
+    "zipcode": "403",
+    "authorized_capital": "30,000,000",
+    "authorized_shares": "3,000,000",
+    "parvalue": "10",
+    "paidincapital": "20,000,000",
+    "total_shares": "2,000,000",
+    "application_number": "",
+    "termofOffice_director": "自民國114年11月23日至民國112年06月22日",
+    "termofOffice_supervisor": "自民國109年06月23日至民國112年06月22日",
+    "number_of_directors": "2",
+    "number_of_supervisors": "1",
+    "date_of_adoption": "民國114年04月20日"
+  },
+  "replacements": [],
+  "tableData": {
+    "director_table": {
+      "document_title": "董事、監察人名單",
+      "directors": [
+        {
+          "id": "1",
+          "position": "董事長",
+          "name": "徐峻祥",
+          "id_number": "B122004737",
+          "shares": "773,425股",
+          "address": "臺中市太平區太平路773號"
+        },
+        {
+          "id": "2",
+          "position": "監察人",
+          "name": "黃勝平",
+          "id_number": "M121642705",
+          "shares": "0股",
+          "address": "臺中市西區五權路1-67號"
+        }
+      ]
+    },
+    "manager_table": {
+      "document_title": "經理人名單",
+      "managers": []
+    },
+    "Legal_Entity_Represented_table": {
+      "document_title": "所代表法人",
+      "LegalEntityRepresented": []
+    },
+    "business_items_table": {
+      "document_title": "營業項目",
+      "target_start_text": "本公司所營事業如下：",
+      "business_items": [
+        {
+          "id": "1",
+          "code": "C703010",
+          "name": "印刷品裝訂及加工業"
+        },
+        {
+          "id": "2",
+          "code": "I103060",
+          "name": "管理顧問業"
+        },
+        {
+          "id": "3",
+          "code": "I199990",
+          "name": "其他顧問服務業"
+        },
+        {
+          "id": "4",
+          "code": "I301010",
+          "name": "資訊軟體服務業"
+        },
+        {
+          "id": "5",
+          "code": "I301020",
+          "name": "資料處理服務業"
+        },
+        {
+          "id": "6",
+          "code": "I301030",
+          "name": "電子資訊供應服務業"
+        },
+        {
+          "id": "7",
+          "code": "I401010",
+          "name": "一般廣告服務業"
+        },
+        {
+          "id": "8",
+          "code": "I501010",
+          "name": "產品設計業"
+        },
+        {
+          "id": "9",
+          "code": "IG03010",
+          "name": "能源技術服務業"
+        },
+        {
+          "id": "10",
+          "code": "IZ99990",
+          "name": "其他工商服務業"
+        },
+        {
+          "id": "11",
+          "code": "E601010",
+          "name": "電器承裝業"
+        },
+        {
+          "id": "12",
+          "code": "E601020",
+          "name": "電器安裝業"
+        },
+        {
+          "id": "13",
+          "code": "E603010",
+          "name": "電纜安裝工程業"
+        },
+        {
+          "id": "14",
+          "code": "E603040",
+          "name": "消防安全設備安裝工程業"
+        },
+        {
+          "id": "15",
+          "code": "E603050",
+          "name": "自動控制設備工程業"
+        },
+        {
+          "id": "16",
+          "code": "E603090",
+          "name": "照明設備安裝工程業"
+        },
+        {
+          "id": "17",
+          "code": "E604010",
+          "name": "機械安裝業"
+        },
+        {
+          "id": "18",
+          "code": "E605010",
+          "name": "電腦設備安裝業"
+        },
+        {
+          "id": "19",
+          "code": "E701010",
+          "name": "電信工程業"
+        },
+        {
+          "id": "20",
+          "code": "E701020",
+          "name": "衛星電視ＫＵ頻道、Ｃ頻道器材安裝業"
+        },
+        {
+          "id": "21",
+          "code": "EZ05010",
+          "name": "儀器、儀表安裝工程業"
+        },
+        {
+          "id": "22",
+          "code": "EZ99990",
+          "name": "其他工程業"
+        },
+        {
+          "id": "23",
+          "code": "F106010",
+          "name": "五金批發業"
+        },
+        {
+          "id": "24",
+          "code": "F111090",
+          "name": "建材批發業"
+        },
+        {
+          "id": "25",
+          "code": "F113010",
+          "name": "機械批發業"
+        },
+        {
+          "id": "26",
+          "code": "F113020",
+          "name": "電器批發業"
+        },
+        {
+          "id": "27",
+          "code": "F113030",
+          "name": "精密儀器批發業"
+        },
+        {
+          "id": "28",
+          "code": "F117010",
+          "name": "消防安全設備批發業"
+        },
+        {
+          "id": "29",
+          "code": "F118010",
+          "name": "資訊軟體批發業"
+        },
+        {
+          "id": "30",
+          "code": "F217010",
+          "name": "消防安全設備零售業"
+        },
+        {
+          "id": "31",
+          "code": "F401010",
+          "name": "國際貿易業"
+        },
+        {
+          "id": "32",
+          "code": "ZZ99999",
+          "name": "除許可業務外，得經營法令非禁止或限制之業務"
+        }
+      ]
+    }
+  }
+}
