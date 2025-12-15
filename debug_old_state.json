@@ -1,6 +1,6 @@
 {
   "basicInformation": {
-    "applicationReason": "更換負責人為王大明",
+    "applicationReason": "",
     "registration_type": "current_status",
     "companyType": "股份有限公司",
     "companyName": "原人股份有限公司",
@@ -8,7 +8,7 @@
     "companyId": "60299784",
     "companyAddress": "臺中市西區臺灣大道二段2號11樓之6",
     "companyPhoneNumber": "(04) 23599710",
-    "chairmanName": "王大明",
+    "chairmanName": "徐峻祥",
     "zipcode": "403",
     "authorizedCapital": "30,000,000",
     "authorizedShares": "3,000,000",
@@ -30,7 +30,7 @@
         {
           "id": "1",
           "position": "董事長",
-          "name": "王大明",
+          "name": "徐峻祥",
           "id_number": "B122004737",
           "shares": "773,425股",
           "address": "臺中市太平區太平路773號"
@@ -219,21 +219,5 @@
         }
       ]
     }
-  },
-  "changes_summary": [
-    {
-      "field": "chairmanName",
-      "label": "負責人",
-      "old": "徐峻祥",
-      "new": "王大明",
-      "description": "負責人由徐峻祥變更為王大明"
-    },
-    {
-      "field": "directors",
-      "label": "董事名單",
-      "old": "徐峻祥",
-      "new": "王大明",
-      "description": "董事長由徐峻祥變更為王大明"
-    }
-  ]
+  }
 }

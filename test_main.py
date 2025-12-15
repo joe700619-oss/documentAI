@@ -4,9 +4,7 @@ from getbasicInformationfromMOEA import BasicInformationAPI
 import re
 from dotenv import load_dotenv
 
-from langchain_openai import ChatOpenAI, OpenAIEmbeddings
-from langchain_community.vectorstores import FAISS
-from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_openai import ChatOpenAI
 from langchain_core.documents import Document
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser
@@ -22,21 +20,7 @@ load_dotenv()
 
 
 # ==========================================================
-# 文件類型定義
-# ==========================================================
-DOCUMENT_TYPES = {
-    "articles_of_association",
-    "meeting_minutes",
-    "director_roster",
-    "shareholder_roster",
-    "change_registration_form",
-    "establishment_registration_form",
-    "unknown"
-}
-
-
-# ==========================================================
-# 文件分類器
+# 文件類型定義與偵測
 # ==========================================================
 def detect_document_type(filename: str, text: str):
     name = filename.lower()
@@ -67,20 +51,16 @@ def detect_document_type(filename: str, text: str):
     if "設立登記" in head and head.count("董事") >= 3:
         return "establishment_registration_form"
 
-    if "出席" in head and "決議" in head:
-        return "meeting_minutes"
-
     if re.search(r"第.{1,3}條", head):
         return "articles_of_association"
 
     return "unknown"
 
 
-# ==========================================================
-# 文件載入
-# ==========================================================
 def load_documents(folder):
     docs = []
+    if not os.path.exists(folder):
+        return docs
 
     for f in os.listdir(folder):
         path = os.path.join(folder, f)
@@ -88,7 +68,6 @@ def load_documents(folder):
             continue
 
         content = ""
-
         try:
             if path.endswith(".pdf") or path.endswith(".docx"):
                 elements = partition(
@@ -116,7 +95,6 @@ def load_documents(folder):
             continue
 
         dtype = detect_document_type(f, content)
-
         docs.append(Document(
             page_content=content,
             metadata={"source": f, "doc_type": dtype}
@@ -124,121 +102,177 @@ def load_documents(folder):
 
     return docs
 
-
-# ==========================================================
-# 資料抽取（整合 MOEA 與 文件）
-# ==========================================================
-def select_registration_type(llm, user_request: str, allowed_types: list, current_info: dict):
-    """
-    Step 2: 讓 LLM 從 allowed_types 中選擇符合 user_request 的變更類型。
-    """
-    allowed_str = json.dumps(allowed_types, ensure_ascii=False, indent=2)
-    prompt = ChatPromptTemplate.from_template("""
-你是一個專業的法律與公司登記顧問。
-請根據【使用者需求】與【目前公司資料】，從【合法變更類型列表】中選擇一個或多個最符合的變更類型。
-
-特別注意：
-1. 若涉及遷址：
-   請比較【使用者需求】中的新地址與【目前公司資料】中的舊地址。
-   - 若縣市名稱相同（例如都在台北市），請選擇 "遷址(同縣市)"。
-   - 若縣市名稱不同（例如從台中市搬到台北市），請選擇 "遷址(不同縣市)"。
-2. 若無法從目前資料判斷，請依常理推斷或選擇較寬鬆的選項。
-
-【使用者需求】：{user_request}
-
-【目前公司資料】：
-{current_info}
-
-【合法變更類型列表】：
-{allowed_types}
-
-請直接回傳一個 JSON Array，包含所有符合的類型字串。
-例如：["變更負責人", "遷址(同縣市)"]
-若無匹配，回傳 []。
-只回傳 JSON，不要有其他說明。
-""")
-    chain = prompt | llm | StrOutputParser()
-    result = chain.invoke({
-        "user_request": user_request,
-        "current_info": json.dumps(current_info, ensure_ascii=False, indent=2),
-        "allowed_types": allowed_str
-    })
-    
+def parse_json_output(text):
     try:
-        cleaned_result = result.strip()
-        if cleaned_result.startswith("```json"):
-            cleaned_result = cleaned_result[7:]
-        if cleaned_result.startswith("```"):
-            cleaned_result = cleaned_result[3:]
-        if cleaned_result.endswith("```"):
-            cleaned_result = cleaned_result[:-3]
-        return json.loads(cleaned_result.strip())
+        cleaned = text.strip()
+        if cleaned.startswith("```json"):
+            cleaned = cleaned[7:]
+        if cleaned.startswith("```"):
+            cleaned = cleaned[3:]
+        if cleaned.endswith("```"):
+            cleaned = cleaned[:-3]
+        return json.loads(cleaned.strip())
     except Exception as e:
-        print(f"Error parsing registration type selection: {e}")
-        return []
+        print(f"JSON Parse Error: {e}")
+        return {}
 
-def extract_company_data(llm, full_text: str, moea_data: dict, user_request: str, selected_types: list, target_schema: dict):
-    """
-    Step 5: 依照 format_example (target_schema) 回傳資料。
-    需填寫 application_reason, registration_type。
-    需整合 MOEA (locked) 與 Document (editable)。
-    """
 
+# ==========================================================
+# LLM 處理邏輯
+# ==========================================================
+
+def create_complete_old_state(llm, full_text: str, moea_data: dict, target_schema: dict):
+    """
+    Step 2 & 3: 產生完整的【舊資料狀態】(Old State)。
+    邏輯：
+    - 以 MOEA 資料為權威基礎。
+    - 使用文件內容 (變更登記表/設立登記表) 補足 MOEA 缺少的資料 (例如董監事名單、營業項目細項)。
+    - ⚠️ 注意：這一步驟【不應用】使用者的變更需求。我們要建立的是「變更前」的完整狀態。
+      如果文件本身是「變更後」的登記表（歷史資料），則視為目前的「現狀」。
+    """
     moea_info_str = json.dumps(moea_data, ensure_ascii=False, indent=2)
     schema_str = json.dumps(target_schema, ensure_ascii=False, indent=2)
-    selected_types_str = ", ".join(selected_types)
 
     prompt = ChatPromptTemplate.from_template("""
-你是一個法律文件資料抽取引擎。
+你是一個資料整合專家。
 
 任務：
-請根據以下來源資訊，產出符合【目標 JSON 格式】的資料。
+請建立該公司目前的【完整現狀資料】(Old State JSON)。
 
 來源資訊：
-1. 【使用者需求】：{user_request}
-2. 【選定的變更類型】：{selected_types}
-3. 【MOEA 權威資料】 (Source of Truth)：包含已知的公司基本資料與欄位鎖定規則(locked/editable)。
-4. 【文件內容】：變更登記表或設立登記表全文。
+1. 【MOEA 權威資料】：官方基礎資料 (最準確)。
+2. 【文件內容】：歷史文件，用於補足 MOEA 缺少的細節 (如董監事名單、詳細營業項目)。
 
-⚠️ 資料整合與填寫規則：
-1. **registration_type**：必須填入【選定的變更類型】（若有多個用逗號分隔）。
-2. **application_reason**：請根據【使用者需求】摘要填寫（例如："更換負責人為王大明"）。
-3. **MOEA 鎖定欄位**：若 MOEA 資料中某欄位標記為 "locked"，且使用者需求未明確要求修改該欄位，請直接使用 MOEA 的值。
-4. **缺失與補足**：若 MOEA 資料缺漏或標記為 "editable"，請從【文件內容】中尋找最新資訊填入。
-5. **格式一致性**：輸出的 JSON 結構必須與【目標 JSON 格式】完全一致。
+整合規則：
+1. **補足闕漏**：若 MOEA 資料有缺 (例如缺少 directors 列表)，請從【文件內容】中提取並補上。
+2. **維持現狀**：請不要「更動」資料，除非 MOEA 是空的。我們要還原該公司在「本次變更前」的狀態。
+3. **格式統一**：請依照【目標 JSON 格式】輸出。
+4. **registration_type**：請留空或填寫 "current_status"，因為這是現狀資料。
 
 【MOEA 權威資料】
 {moea_info}
 
-【目標 JSON 格式 (範例)】
-{target_schema}
-
-【文件內容】
+【文件內容 (歷史/現狀)】
 {content}
 
-請依照上述目標格式輸出 JSON 資料 (只輸出 JSON，不要說明文字)：
+【目標 JSON 格式】
+{target_schema}
+
+請直接回傳 JSON (不要包含 Markdown 標記)：
 """)
 
     chain = prompt | llm | StrOutputParser()
     result = chain.invoke({
         "content": full_text,
         "moea_info": moea_info_str,
-        "selected_types": selected_types_str,
-        "user_request": user_request,
         "target_schema": schema_str
     })
 
-    try:
-        cleaned_result = result.strip()
-        if cleaned_result.startswith("```json"):
-            cleaned_result = cleaned_result[7:]
-        if cleaned_result.startswith("```"):
-            cleaned_result = cleaned_result[3:]
-        if cleaned_result.endswith("```"):
-            cleaned_result = cleaned_result[:-3]
-        return json.loads(cleaned_result.strip())
-    except Exception as e:
-        return {"error": "JSON parse failed", "raw": result}
+    return parse_json_output(result)
+
+
+def apply_changes_and_generate_new_state(llm, old_state: dict, user_request: str, allowed_types: list):
+    """
+    Step 4: 根據使用者需求，修改 Old State -> 產生 New State。
+    同時判斷 registration_type。
+    """
+    old_state_str = json.dumps(old_state, ensure_ascii=False, indent=2)
+    allowed_str = json.dumps(allowed_types, ensure_ascii=False, indent=2)
+
+    prompt = ChatPromptTemplate.from_template("""
+你是一個公司資料變更引擎。
+
+任務：
+請根據【使用者需求】，修改【舊資料狀態】，產生【新資料狀態】，並判斷【變更類型】。
+
+輸入資訊：
+1. 【舊資料狀態 (Old State)】：
+{old_state}
+
+2. 【使用者需求 (User Request)】：
+{user_request}
+
+3. 【合法變更類型列表】：
+{allowed_types}
+
+執行步驟：
+1. **應用變更**：
+   - 根據使用者需求修改舊資料中的對應欄位 (例如：姓名、地址、資本額)。
+   - 若需求為「更換負責人」，請記得更新 basicInformation 下的 chairmanName 以及 tableData 中的 directors 列表。
+   - 更新 `applicationReason` 欄位為使用者需求的摘要 (例如 "更換負責人為王大明")。
+
+2. **判斷變更類型**：
+   - 根據你所做的修改，從列表中選擇對應的 `registration_type`。
+   - 若為遷址，請判斷縣市是否變更。
+   - 將選定的類型填入 JSON 的 `registration_type` 欄位 (多選時用逗號分隔)。
+
+3. **輸出結果**：
+   - 回傳完整的【新資料狀態 JSON】。
+
+請直接回傳 JSON (不要包含 Markdown 標記)：
+""")
+
+    chain = prompt | llm | StrOutputParser()
+    result = chain.invoke({
+        "old_state": old_state_str,
+        "user_request": user_request,
+        "allowed_types": allowed_str
+    })
+
+    return parse_json_output(result)
+
+
+def compare_old_and_new(llm, old_state: dict, new_state: dict):
+    """
+    Step 5: 比對 Old 與 New，產生 changes_summary。
+    使用 LLM 進行語意比對，避免格式差異造成的誤判。
+    """
+    old_str = json.dumps(old_state, ensure_ascii=False, indent=2)
+    new_str = json.dumps(new_state, ensure_ascii=False, indent=2)
+
+    prompt = ChatPromptTemplate.from_template("""
+你是一個資料差異比對專家。
+
+任務：
+請比對【舊資料】與【新資料】，列出所有實質變更。
+
+輸入資訊：
+1. 【舊資料 (Old)】
+{old_state}
+
+2. 【新資料 (New)】
+{new_state}
+
+比對規則：
+1. 忽略格式差異 (改行、空白)。
+2. 忽略 "registration_type", "applicationReason", "date_of_adoption" 等本次申請必然變動的行政欄位，除非使用者明確要求變更。
+3. **重點檢查**：
+   - 公司名稱, 資本額, 地址, 負責人。
+   - 董監事名單 (新增/移除/職位變更)。
+   - 營業項目 (新增/移除)。
+
+輸出格式：
+請回傳一個 JSON Array (List), 每個項目如下：
+{{
+  "field": "欄位識別碼 (例如 companyName, directors)",
+  "label": "中文欄位名稱",
+  "old": "舊值 (摘要)",
+  "new": "新值 (摘要)",
+  "description": "說明差異 (例如 '負責人由 A 變更為 B')"
+}}
+
+若無實質變更，回傳 []。
+
+請直接回傳 JSON List (不要包含 Markdown 標記)：
+""")
+
+    chain = prompt | llm | StrOutputParser()
+    result = chain.invoke({
+        "old_state": old_str,
+        "new_state": new_str
+    })
+
+    return parse_json_output(result)
 
 
 # ==========================================================
@@ -279,11 +313,10 @@ class DebugWorkflow:
             print(f"Warning: Failed to load company_registration_form.json: {e}")
 
     def run(self):
-        # 1. 載入文件並過濾 (只保留變更登記表/設立登記表)
-        # 依照需求：先在資料夾中，只有找出變更登記表，或是設立登記表...
-        print("\n=== STEP 1: searching Documents ===")
+        # 1. 取得 MOEA 資料
+        print("\n=== STEP 1: Fetching MOEA Data ===")
+        # 先掃描文件找統編，若無則用預設
         all_docs = load_documents(self.history_dir) + load_documents(self.history_cases_dir)
-        
         target_types = ["change_registration_form", "establishment_registration_form"]
         filtered_docs = [d for d in all_docs if d.metadata["doc_type"] in target_types]
 
@@ -291,66 +324,67 @@ class DebugWorkflow:
             print("未找到「變更登記表」或「設立登記表」，流程結束。")
             return
 
-        print(f"Found {len(filtered_docs)} registration form(s).")
         full_text = "\n\n".join(d.page_content for d in filtered_docs)
-
-        # 2. 取得 MOEA 基本資料 (提前至此以便判斷變更類型)
-        print("\n=== STEP 2: Fetching MOEA Data ===")
-        # 嘗試從文本中抓取統一編號
+        print(f"Read {len(filtered_docs)} doc(s).")
+        
         tax_id_match = re.search(r"統一編號[：:\s]*(\d{8})", full_text)
         if not tax_id_match:
             tax_id_match = re.search(r"\b(\d{8})\b", full_text)
-        
-        tax_id = tax_id_match.group(1) if tax_id_match else "60299784" # Fallback
-        print(f"Detected Tax ID: {tax_id}")
+        tax_id = tax_id_match.group(1) if tax_id_match else "60299784"
+        print(f"Target Tax ID: {tax_id}")
 
-        print("Fetching MOEA Data...")
         moea_facts = self.moea_api.get_company_facts(tax_id)
-        
-        # 建構 Context
-        moea_context = {
-            "values": moea_facts,
-            "policy": {
-                "companyName": "locked",
-                "authorizedCapital": "locked",
-                "companyAddress": "locked",
-                "chairmanName": "locked",
-                "business_items": "locked", # 假設 API 回傳目前最新的，設為 locked (除非使用者要改)
-            }
-        }
+        print("MOEA Data Fetched.")
 
-        # 3. 使用者輸入 & LLM 選擇變更類型
-        print("\n=== STEP 3: User Input & Classification ===")
-        user_input_request = input("\n請輸入您的變更需求 (例如：更換負責人為王大明、遷址...): ").strip()
+        # 2. 歷史資料補足 -> 產生【完整舊資料】
+        print("\n=== STEP 2: Creating Complete Old State (MOEA + Doc) ===")
+        print("Filling gaps (e.g. directors) using document content...")
         
-        print("Identifying Registration Type...")
-        selected_types = select_registration_type(
-            self.llm, 
-            user_input_request,
-            self.allowed_registration_types,
-            current_info=moea_facts 
-        )
-        print(f"Selected Types: {selected_types}")
-
-        # 4. & 5. 填入資料並回傳 JSON
-        print("\n=== STEP 4 & 5: Filling Form & Generating JSON ===")
-        print("Extracting & Merging Data...")
-        result_json = extract_company_data(
-            self.llm, 
-            full_text, 
-            moea_context, 
-            user_input_request,
-            selected_types,
+        old_state_json = create_complete_old_state(
+            self.llm,
+            full_text,
+            moea_facts,
             self.target_schema
         )
+        # Debug save
+        with open("debug_old_state.json", "w", encoding="utf-8") as f:
+            json.dump(old_state_json, f, ensure_ascii=False, indent=2)
 
-        print("\n=== Final JSON Output ===")
-        print(json.dumps(result_json, ensure_ascii=False, indent=2))
+        # 3. 使用者輸入
+        print("\n=== STEP 3: User Request & Change Classification ===")
+        user_input_request = input("\n請輸入您的變更需求 (例如：更換負責人為王大明、遷址...): ").strip()
+
+        # 4. 產生【新資料】 (Old + Request)
+        print("\n=== STEP 4: Generating New State (Applying Changes) ===")
+        new_state_json = apply_changes_and_generate_new_state(
+            self.llm,
+            old_state_json,
+            user_input_request,
+            self.allowed_registration_types
+        )
+
+        # 5. 比對差異
+        print("\n=== STEP 5: Generating Changes Summary ===")
+        changes = compare_old_and_new(
+            self.llm,
+            old_state_json,
+            new_state_json
+        )
         
-        # Save to file
-        with open("final_llm_output.json", "w", encoding="utf-8") as f:
-            json.dump(result_json, f, ensure_ascii=False, indent=2)
-        print("\n(已將結果儲存至 final_llm_output.json)")
+        print(f"Detected {len(changes)} changes.")
+        for c in changes:
+            print(f"- {c['label']} ({c['field']}): {c.get('description', '')}")
+
+        # 6. Final Output
+        print("\n=== Final JSON Output ===")
+        new_state_json["changes_summary"] = changes
+        
+        output_file = "final_llm_output.json"
+        with open(output_file, "w", encoding="utf-8") as f:
+            json.dump(new_state_json, f, ensure_ascii=False, indent=2)
+            
+        print(json.dumps(new_state_json, ensure_ascii=False, indent=2))
+        print(f"\n(Result saved to {output_file})")
 
 if __name__ == "__main__":
     DebugWorkflow().run()
