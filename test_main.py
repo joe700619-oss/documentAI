@@ -1,6 +1,7 @@
 import os
 import json
 from getbasicInformationfromMOEA import BasicInformationAPI
+from get_required_documents import get_required_documents
 import re
 from dotenv import load_dotenv
 
@@ -375,7 +376,31 @@ class DebugWorkflow:
         for c in changes:
             print(f"- {c['label']} ({c['field']}): {c.get('description', '')}")
 
-        # 6. Final Output
+        # 6. Get Required Documents based on registration_type
+        print("\n=== STEP 6: Getting Required Documents ===")
+        registration_types = new_state_json.get("registration_type", "")
+        # 處理可能是字串或列表的情況
+        if isinstance(registration_types, str):
+            # 如果是字串,根據逗號分割
+            allowed_types = [t.strip() for t in registration_types.split(",") if t.strip()]
+        elif isinstance(registration_types, list):
+            allowed_types = registration_types
+        else:
+            allowed_types = []
+        
+        print(f"Registration Type(s): {allowed_types}")
+        
+        if allowed_types:
+            required_docs = get_required_documents(allowed_types)
+            print(f"Found {len(required_docs)} required documents:")
+            for doc in required_docs:
+                print(f"  - {doc['name']} (type: {doc['type']})")
+            new_state_json["required_documents"] = required_docs
+        else:
+            print("No registration type found, skipping document retrieval.")
+            new_state_json["required_documents"] = []
+
+        # 7. Final Output
         print("\n=== Final JSON Output ===")
         new_state_json["changes_summary"] = changes
         

@@ -3,6 +3,8 @@
         {
             "registration_type": "設立",
             "org_type": "股份有限公司",
+            "description": "設立公司，組織型態是股份有限公司",
+            "id": "A01",
             "required_documents": [
                 {
                     "type": "T",
@@ -63,6 +65,7 @@
         {
             "registration_type": "遷址(同縣市)",
             "org_type": "股份有限公司",
+            "description": "遷址前後仍在同一縣市",
             "required_documents": [
                 {
                     "type": "T",
@@ -95,6 +98,7 @@
         {
             "registration_type": "遷址(不同縣市)",
             "org_type": "股份有限公司",
+            "description": "遷址前後不再同一縣市",
             "required_documents": [
                 {
                     "type": "T",
@@ -134,6 +138,7 @@
         },
         {
             "registration_type": "重新改選董監事",
+            "description": "全體董事、監事重新改選，無論是任期到期全部重新選舉，或是提前改選；不包括單獨補選",
             "org_type": "股份有限公司",
             "required_documents": [
                 {
@@ -171,6 +176,7 @@
         {
             "registration_type": "補選董監事",
             "org_type": "股份有限公司",
+            "description": "單獨補選董事或監事",
             "required_documents": [
                 {
                     "type": "T",
@@ -203,6 +209,7 @@
         {
             "registration_type": "變更負責人",
             "org_type": "股份有限公司",
+            "description": "變更負責人，包含法人重新指派代表人，或是法人代表變更",
             "required_documents": [
                 {
                     "type": "T",
@@ -235,6 +242,7 @@
         {
             "registration_type": "董監持股異動",
             "org_type": "股份有限公司",
+            "description": "董監持股異動，包含董事持股異動、監事持股異動、董監持股同時異動",
             "required_documents": [
                 {
                     "type": "T",
@@ -261,8 +269,9 @@
             ]
         },
         {
-            "registration_type": "測試",
+            "registration_type": "預設值",
             "org_type": "股份有限公司",
+            "description": "預設值，未找到其他類別",
             "required_documents": [
                 {
                     "type": "T",
